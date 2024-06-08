@@ -7,16 +7,7 @@ import { useDispatch } from "react-redux";
 
 import css from './ContactForm.module.css'
 
-const ContactSchema = Yup.object().shape({
-    name: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Required"),
-    number: Yup.string()
-      .min(5, "Too Short!")
-      .max(13, "Too Long!")
-      .required("Required")
-  });
+
 
 export default function ContactForm() { 
   const dispatch = useDispatch();
@@ -26,11 +17,17 @@ export default function ContactForm() {
         const {name, phone} = values;
         dispatch(addContact(name, phone));
         actions.resetForm();
-    }  
+  } 
+
+
+  const contactSchema = Yup.object().shape({
+    name: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
+    phone: Yup.number().required("Required")
+  });
   
   return (
     <div>
-    <Formik initialValues={{ name: "", phone: "" }} validationSchema={ContactSchema} onSubmit={handleSubmit}>
+    <Formik initialValues={{ name: "", phone: "" }} validationSchema={contactSchema} onSubmit={handleSubmit}>
         <Form className={css.form}>
           <div>
             <label className={css.label} htmlFor="username">Name</label>
@@ -43,9 +40,9 @@ export default function ContactForm() {
               <ErrorMessage className={css.errorNumber} name="phone" component="span" />
           </div>
 
-        <button className={css.btn} type="submit">Add contact</button>
+          <button className={css.btn} type="submit">Add contact</button>
       </Form>
-      </Formik>
+    </Formik>
     </div>
   )
 }
