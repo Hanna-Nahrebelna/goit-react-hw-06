@@ -14,7 +14,8 @@ export default function Contact({id, name, phone}) {
     dispatch(deleteContact(id));
   };
 
-  <div className={css.container}>
+  return (
+    <div className={css.container}>
       <ul className={css.contactList}>
         <span className={css.contactSpan}>
           <li className={css.contactItem}><IoPerson size="20" /></li>
@@ -31,4 +32,5 @@ export default function Contact({id, name, phone}) {
       </span>
      
     </div>
+  )  
 }
